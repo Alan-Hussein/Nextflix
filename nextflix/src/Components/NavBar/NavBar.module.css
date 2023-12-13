@@ -1,0 +1,14 @@
+.navbar{
+    background-color: black;
+    list-style: none;
+  
+}
+
+.navbarItems{
+    display: flex;
+    margin: 20px 0 0 0;
+    padding: 25px;
+    color: white;
+    justify-content: center;
+
+}
