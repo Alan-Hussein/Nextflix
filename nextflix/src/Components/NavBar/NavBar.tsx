@@ -8,7 +8,7 @@ const navBar : React.FC = () => {
      <Logo />
 
       <div className={styles.navbarItems}>
-      <li>Home</li>
+      <Link href="/"><li>Home</li></Link> 
       <li>Movies</li>
      <Link href="/About"><li>About</li></Link> 
       <li>Contact</li>
