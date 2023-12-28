@@ -1,17 +1,17 @@
 "use client"
 import React, { useEffect, useState, useRef } from 'react';
-import { fetchPopularMovies } from '../../Utils/useFetch';
+import { fetchTopRatedMovies } from '../../Utils/useFetch'; // Update the import statement
 import MovieCard from '../MovieCard/MovieCard';
 import styles from '../MovieCard/MovieCard.module.css';
 
-const Popular: React.FC = () => {
+const TopRated: React.FC = () => {
   const [movies, setMovies] = useState<{ title: string; poster_path: string }[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const movieData = await fetchPopularMovies();
+      const movieData = await fetchTopRatedMovies();
       setMovies(movieData);
     };
 
@@ -70,7 +70,7 @@ const Popular: React.FC = () => {
   
   return (
     <div>
-      <h1 className={styles['title']}> Popular Movies</h1>
+      <h1 className={styles['title']}> Top Rated</h1>
       <div className={styles['movie-card-container-wrapper']}>
         <div
           id="movie-card-container"
@@ -96,7 +96,7 @@ const Popular: React.FC = () => {
   );
 };
 
-export default Popular;
+export default TopRated;
 
 
 

@@ -49,3 +49,10 @@ export const fetchMovieImages = async (movieId: number, apiKey?: string) => {
       return null;
     }
   };
+
+  // Fetch Top Rated Movies
+export const fetchTopRatedMovies = async (apiKey?: string) => {
+  const path = '/movie/top_rated';
+  const data = await fetchData(path, apiKey);
+  return data?.results || [];
+};
