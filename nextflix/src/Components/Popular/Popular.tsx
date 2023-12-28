@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { fetchPopularMovies } from '../../Utils/useFetch';
-import Image from 'next/image';
+import MovieCard from '../MovieCard/MovieCard';
 
 const Popular: React.FC = () => {
   const [movies, setMovies] = useState<{ title: string; poster_path: string }[]>([]);
@@ -10,8 +10,6 @@ const Popular: React.FC = () => {
     const fetchData = async () => {
       const movieData = await fetchPopularMovies();
       setMovies(movieData);
-      console.log(movieData);
-      
     };
 
     fetchData();
@@ -23,13 +21,7 @@ const Popular: React.FC = () => {
       <ul>
         {movies.map((movie, index) => (
           <li key={index}>
-            <h3>{movie.title}</h3>
-            <Image
-              src= {`https://image.tmdb.org/t/p/w500/${movie.poster_path }`}
-              alt={`${movie.title} Poster`}
-              width={300} 
-              height={400} // Set your preferred height
-            />
+            <MovieCard title={movie.title} posterPath={movie.poster_path} />
           </li>
         ))}
       </ul>
