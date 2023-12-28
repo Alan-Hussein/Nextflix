@@ -1,3 +1,7 @@
+.popular{
+    color: purple;
+    padding: 25px;
+}
 .movieCard {
   border: 1px solid #ddd;
   margin: 10px;
@@ -8,7 +12,7 @@
 }
 .movieCard:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(121, 14, 14, 0.2);
 }
 
 .movieCard h3 {
@@ -66,3 +70,42 @@
 .navigation-buttons button:hover {
   background-color: #0056b3;
 }
+
+.movie-card-container-wrapper {
+    position: relative;
+  }
+  
+  .navigation-buttons-left,
+  .navigation-buttons-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    z-index: 1;
+  }
+  
+  .navigation-buttons-left {
+    left: 0;
+  }
+  
+  .navigation-buttons-right {
+    right: 0;
+  }
+  
+  .navigation-buttons-left button,
+  .navigation-buttons-right button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navigation-buttons-left button:hover,
+  .navigation-buttons-right button:hover {
+    background-color: #0056b3;
+  }
+  

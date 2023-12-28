@@ -51,10 +51,10 @@ const Popular: React.FC = () => {
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault(); // Prevent the default behavior
-  
+
     const container = containerRef.current;
     const cardWidth = 340; // Adjust the card width based on your styles
-  
+
     if (container) {
       if (e.deltaY > 0) {
         container.scrollLeft += cardWidth; // Scroll right
@@ -62,37 +62,42 @@ const Popular: React.FC = () => {
         container.scrollLeft -= cardWidth; // Scroll left
       }
     }
-  
+
     // Stop the propagation of the wheel event to prevent it from affecting parent elements
     e.stopPropagation();
   };
-  
 
+  
   return (
     <div>
-      <h1>Most Popular Movies</h1>
-      <div className={styles['navigation-buttons']}>
-        <button onClick={() => handleButtonClick('left')}>{'<'}</button>
-        <button onClick={() => handleButtonClick('right')}>{'>'}</button>
-      </div>
-      <div
-        id="movie-card-container"
-        className={styles['movie-card-container']}
-        ref={containerRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onWheel={handleWheel}
-      >
-        {movies.map((movie, index) => (
-          <MovieCard key={index} title={movie.title} posterPath={movie.poster_path} />
-        ))}
+      <h1 className={styles['popular']}> Popular Movies</h1>
+      <div className={styles['movie-card-container-wrapper']}>
+        <div
+          id="movie-card-container"
+          className={styles['movie-card-container']}
+          ref={containerRef}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onWheel={handleWheel}
+        >
+          {movies.map((movie, index) => (
+            <MovieCard key={index} title={movie.title} posterPath={movie.poster_path} />
+          ))}
+        </div>
+        <div className={styles['navigation-buttons-left']}>
+          <button onClick={() => handleButtonClick('left')}>{'<'}</button>
+        </div>
+        <div className={styles['navigation-buttons-right']}>
+          <button onClick={() => handleButtonClick('right')}>{'>'}</button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Popular;
+
 
 
 
