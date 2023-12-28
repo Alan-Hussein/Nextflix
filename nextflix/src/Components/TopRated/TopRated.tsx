@@ -1,13 +1,14 @@
 "use client"
 import React, { useEffect, useState, useRef } from 'react';
-import { fetchTopRatedMovies } from '../../Utils/useFetch'; // Update the import statement
+import { fetchTopRatedMovies } from '../../Utils/useFetch'; 
 import MovieCard from '../MovieCard/MovieCard';
 import styles from '../MovieCard/MovieCard.module.css';
+import useScroll from '../../Utils/useScroll'; 
 
 const TopRated: React.FC = () => {
   const [movies, setMovies] = useState<{ title: string; poster_path: string }[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number | null>(null);
+  const { handleTouchStart, handleTouchMove, handleTouchEnd,handleButtonClick ,handleWheel} = useScroll({ containerRef });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,56 +19,6 @@ const TopRated: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (touchStartX.current === null) {
-      return;
-    }
-
-    const deltaX = touchStartX.current - e.touches[0].clientX;
-    touchStartX.current = e.touches[0].clientX;
-
-    if (containerRef.current) {
-      containerRef.current.scrollLeft += deltaX;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    touchStartX.current = null;
-  };
-
-  const handleButtonClick = (direction: 'left' | 'right') => {
-    const container = containerRef.current;
-    const cardWidth = 340; // Adjust the card width based on styles
-    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-
-    if (container) {
-      container.scrollLeft += scrollAmount;
-    }
-  };
-
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault(); // Prevent the default behavior
-
-    const container = containerRef.current;
-    const cardWidth = 340; // Adjust the card width based on styles
-
-    if (container) {
-      if (e.deltaY > 0) {
-        container.scrollLeft += cardWidth; // Scroll right
-      } else {
-        container.scrollLeft -= cardWidth; // Scroll left
-      }
-    }
-
-    // Stop the propagation of the wheel event to prevent it from affecting parent elements
-    e.stopPropagation();
-  };
-
-  
   return (
     <div>
       <h1 className={styles['title']}> Top Rated</h1>

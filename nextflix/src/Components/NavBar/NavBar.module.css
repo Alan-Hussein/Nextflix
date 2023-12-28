@@ -6,6 +6,7 @@
   padding: 10px;
   position: fixed;
   width: 100%;
+  z-index: 100;
 }
 
 .navbarItems {
@@ -24,5 +25,5 @@
   }
   
   .navbarItems li {
-    margin: 0 10px; /* Adjust margin as needed */
+    margin: 0 10px; 
   }
