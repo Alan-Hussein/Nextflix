@@ -32,7 +32,7 @@ export const fetchData = async (path: string, apiKey?: string) => {
 };
 
 // Get Movies' Images
-export const fetchMovieImages = async (movieId: number, apiKey?: string) => {
+export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
   const path = `/movie/${movieId}/images`;
   const url = getApiUrl(path, apiKey);
 
