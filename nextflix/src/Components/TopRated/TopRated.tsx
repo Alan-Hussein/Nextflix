@@ -6,7 +6,7 @@ import styles from '../MovieCard/MovieCard.module.css';
 import useScroll from '../../Utils/useScroll'; 
 
 const TopRated: React.FC = () => {
-  const [movies, setMovies] = useState<{ title: string; poster_path: string }[]>([]);
+  const [movies, setMovies] = useState<{ title: string; poster_path: string; id:string }[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const { handleTouchStart, handleTouchMove, handleTouchEnd,handleButtonClick ,handleWheel} = useScroll({ containerRef });
 
@@ -33,8 +33,8 @@ const TopRated: React.FC = () => {
           onWheel={handleWheel}
         >
           {movies.map((movie, index) => (
-            <MovieCard key={index} title={movie.title} posterPath={movie.poster_path} />
-          ))}
+            <MovieCard key={index} title={movie.title} posterPath={movie.poster_path}  movieId={movie.id}/>
+            ))}
         </div>
         <div className={styles['navigation-buttons-left']}>
           <button onClick={() => handleButtonClick('left')}>{'<'}</button>
