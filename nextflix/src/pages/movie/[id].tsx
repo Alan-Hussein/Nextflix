@@ -10,7 +10,7 @@ const MoviePage = () => {
     return <div>Loading</div>;
   }
 
-  return <MovieDetails movieId={id as string} apiKey='64cc36fb018acbb8f7f350a37b672014'/>;
+  return <MovieDetails movieId={id as string} />;
 };
 
 export default MoviePage;
