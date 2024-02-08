@@ -1,0 +1,70 @@
+.movieDetails {
+  margin: 40px 0 50px 90px;
+  width: 50%;
+  border: 1px solid rebeccapurple;
+  border-radius: 5px;
+}
+.movieImg{
+  padding: 0 0 20px 20px;
+  border-radius: 20px;
+}
+.overview {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: flex;
+}
+
+.movieTitle {
+  color: Gold;
+  margin: 25px 25px 25px 50px;
+}
+.movieDetailsOverview {
+  margin: 20px;
+}
+.originalTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: purple;
+  font-style: italic;
+}
+.movieOverview {
+  padding: 30px 0 30px 0;
+}
+
+.genres {
+  display: inline;
+  padding-right: 10px;
+  color: purple;
+}
+.voteStar {
+  display: flex;
+  align-items: center;
+}
+.vote {
+  padding: 30px 5px 30px 0;
+  color: gold;
+}
+.star {
+  color: gold;
+}
+.languages {
+  display: flex;
+  align-items: center;
+  padding: 0px 0 30px 0;
+}
+.watch{
+  border: 1px solid red;
+  border-radius: 8px;
+  background-color: red;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.watch:hover{
+  background-color: white;
+  color: red;
+  border: white;
+
+}

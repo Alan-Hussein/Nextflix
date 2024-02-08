@@ -1,9 +1,11 @@
 // MovieDetails.tsx
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { fetchMovieDetails, fetchMovieImages } from '../../Utils/useFetch';
-import Image from 'next/image';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { fetchMovieDetails, fetchMovieImages } from "../../Utils/useFetch";
+import Image from "next/image";
+import styles from "./MovieDetails.module.css";
+import { FaStar } from "react-icons/fa";
 
 interface MovieDetailsProps {
   movieId: string;
@@ -39,22 +41,54 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
     return <div>Loading...</div>;
   }
   console.log(movieDetails.poster_path);
-  
 
   return (
     <div>
-      <h2>{movieDetails.title}</h2>
-          {movieDetails.title !== movieDetails.original_title ? (<p>{movieDetails.original_title}</p>) : null}
-          <p>{movieDetails.overview}</p>
-      <Image
-          src={`https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`}
-          alt={`${movieDetails.title} Poster`}
-          width={500}
-          height={400}
+      <div className={styles.movieDetails}>
+        <h2 className={styles.movieTitle}>{movieDetails.title}</h2>
+        <div className={styles.overview}>
+          <Image
+            className={styles.movieImg}
+            src={`https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`}
+            alt={`${movieDetails.title} Poster`}
+            width={500}
+            height={500}
+          />
+          <div className={styles.movieDetailsOverview}>
+            <p className={styles.originalTitle}>
+              {movieDetails.original_title}
+            </p>
+            <p className={styles.movieOverview}>{movieDetails.overview}</p>
 
-        />
-        <p>{movieDetails.vote_average.toFixed(1)}</p>
-        {movieImages.map((image: any, index: number) => (
+            {movieDetails.genres.map((genre: any) => (
+              <p className={styles.genres} key={genre.id}>
+                {genre.name} |
+              </p>
+            ))}
+            <div className={styles.voteStar}>
+              <p className={styles.vote}>
+                {movieDetails.vote_average.toFixed(1)}
+              </p>
+              <FaStar className={styles.star} />
+            </div>
+
+            <div className={styles.languages}>
+              <span>Sopken Languages:</span>{" "}
+              {movieDetails.spoken_languages.map((lan: any) => (
+                <h4>{lan.english_name}/ </h4>
+              ))}
+            </div>
+            {movieDetails.homepage && (
+              <a className={styles.watch} href={movieDetails.homepage}>
+                {" "}
+                Link To Watch
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <div>
+         {movieImages.map((image: any, index: number) => (
         <Image
           key={index}
           src={image.src}
@@ -63,13 +97,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
           height={200}
         />
       ))}
-      <h3>original language : {movieDetails.original_language}</h3>
-      {<h3><a href={movieDetails.homepage}> Link To Watch</a></h3>}
-      {movieDetails.genres.map((genre:any) => (
-  <h4 key={genre.id}>{genre.name} </h4>
-))}
-<div><span>Sopken Languages:</span> {movieDetails.spoken_languages.map((lan:any)=>(<h4>{lan.english_name}</h4>))}</div>
-
+      </div> */}
     </div>
   );
 };
