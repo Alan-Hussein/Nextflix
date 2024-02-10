@@ -79,4 +79,10 @@ export const fetchPopularMovies = async (apiKey?: string) => {
   }
 };
 
+//
+export const fetchVideo = async (movieId: string,apiKey?: string) =>{
+  const path = `/movie/${movieId}/videos`;
+  const data = await fetchData(path, apiKey);
+  return data?.results || [];
 
+}

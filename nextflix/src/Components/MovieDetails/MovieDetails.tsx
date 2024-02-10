@@ -2,10 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { fetchMovieDetails, fetchMovieImages } from "../../Utils/useFetch";
+import {
+  fetchMovieDetails,
+  fetchMovieImages,
+  fetchVideo,
+} from "../../Utils/useFetch";
 import Image from "next/image";
 import styles from "./MovieDetails.module.css";
 import { FaStar } from "react-icons/fa";
+import { log } from "console";
 
 interface MovieDetailsProps {
   movieId: string;
@@ -21,6 +26,7 @@ const shuffleArray = (array: any[]) => {
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
   const [movieDetails, setMovieDetails] = useState<any>(null);
   const [movieImages, setMovieImages] = useState<any>(null);
+  const [video, setVideo] = useState<any>(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -33,6 +39,17 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
       setMovieImages(images ? shuffleArray(images).slice(0, 6) : null);
     };
 
+    const fetchVideoDetails = async () => {
+      const videos = await fetchVideo(movieId, apiKey);
+      if (videos && videos.length > 0) {
+        setVideo(videos[0]);
+      } else {
+        setVideo(null);
+      }
+    };
+    console.log(video);
+
+    fetchVideoDetails();
     fetchDetails();
     fetchImages();
   }, [movieId, apiKey]);
@@ -40,8 +57,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
   if (!movieDetails || !movieImages) {
     return <div>Loading...</div>;
   }
-  console.log(movieDetails.poster_path);
-
+ 
   return (
     <div>
       <div className={styles.movieDetails}>
@@ -86,18 +102,32 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
             )}
           </div>
         </div>
+        <div className={styles.video}>
+          {video && (
+            <div className={styles.videoContainer}>
+              <iframe
+                className={styles.video}
+                src={`https://www.youtube.com/embed/${video.key}`}
+                title={video.name}
+                width={900}
+                height={450}
+                allowFullScreen
+              />
+            </div>
+          )}
+          <div>
+            {movieImages.map((image: any, index: number) => (
+              <Image
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                width={300}
+                height={200}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-      {/* <div>
-         {movieImages.map((image: any, index: number) => (
-        <Image
-          key={index}
-          src={image.src}
-          alt={image.alt}
-          width={300}
-          height={200}
-        />
-      ))}
-      </div> */}
     </div>
   );
 };
