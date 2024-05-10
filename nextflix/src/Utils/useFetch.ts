@@ -79,10 +79,19 @@ export const fetchPopularMovies = async (apiKey?: string) => {
   }
 };
 
-//
+//GET video
 export const fetchVideo = async (movieId: string,apiKey?: string) =>{
   const path = `/movie/${movieId}/videos`;
   const data = await fetchData(path, apiKey);
   return data?.results || [];
 
 }
+//GET Similar videos 
+
+export const fetchSimilarVideos= async (movieId: string, apiKey?: string) => {
+  const path = `/movie/${movieId}/similar`;
+  const data = await fetchData(path, apiKey);
+  console.log(data);
+  
+  return data?.results || [];
+};

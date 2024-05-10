@@ -11,6 +11,8 @@ import Image from "next/image";
 import styles from "./MovieDetails.module.css";
 import { FaStar } from "react-icons/fa";
 import { log } from "console";
+import Similar from "../../Components/Similar/Similar";
+import NavBar from "@/Components/NavBar/NavBar";
 
 interface MovieDetailsProps {
   movieId: string;
@@ -59,7 +61,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
   }
  
   return (
-    <div>
+    <div className={styles.movieDetailsPage}>
+      <NavBar />
       <div className={styles.movieDetails}>
         <h2 className={styles.movieTitle}>{movieDetails.title}</h2>
         <div className={styles.overview}>
@@ -127,6 +130,9 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
             ))}
           </div>
         </div>
+      </div>
+      <div>
+        <Similar movieId= {movieId}  />
       </div>
     </div>
   );

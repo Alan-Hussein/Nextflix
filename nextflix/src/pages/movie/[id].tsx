@@ -1,6 +1,6 @@
 // pages/movie/[id].tsx
 import { useRouter } from 'next/router';
-import MovieDetails from '../../Components/MovieDetails/MovieDetails';
+import MovieDetails from '../MovieDetails/MovieDetails';
 
 const MoviePage = () => {
   const router = useRouter();
