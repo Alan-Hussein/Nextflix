@@ -33,7 +33,7 @@ export const fetchData = async (path: string, apiKey?: string) => {
 
 // Get Movies' Images
 export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
-  const path = `/movie/${movieId}/images`;
+  const path = `/movie/${movieId}/images?`;
   const url = getApiUrl(path, apiKey);
 
   try {
@@ -41,7 +41,7 @@ export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
     if (response.ok) {
       const data = await response.json();
       return data.backdrops.map((image: any) => ({
-        src: `https://image.tmdb.org/t/p/original${image.file_path}`,
+        src: `https://image.tmdb.org/t/p/original${image.file_path}?`,
         alt: `Backdrop Image for Movie ${movieId}`,
       }));
     } else {
@@ -56,20 +56,20 @@ export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
 
 // Fetch Top Rated Movies
 export const fetchTopRatedMovies = async (apiKey?: string) => {
-  const path = '/movie/top_rated';
+  const path = '/movie/top_rated?';
   const data = await fetchData(path, apiKey);
   return data?.results || [];
 };
 
 // Fetch Movie Details
 export const fetchMovieDetails = async (movieId: string, apiKey?: string) => {
-  const path = `/movie/${movieId}`;
+  const path = `/movie/${movieId}?`;
   return await fetchData(path, apiKey);
 };
 
 // Get Popular Movies
 export const fetchPopularMovies = async (apiKey?: string) => {
-  const path = '/movie/popular';
+  const path = '/movie/popular?';
   try {
     const data = await fetchData(path, apiKey);
     return data?.results || [];
@@ -81,17 +81,46 @@ export const fetchPopularMovies = async (apiKey?: string) => {
 
 //GET video
 export const fetchVideo = async (movieId: string,apiKey?: string) =>{
-  const path = `/movie/${movieId}/videos`;
+  const path = `/movie/${movieId}/videos?`;
   const data = await fetchData(path, apiKey);
   return data?.results || [];
 
 }
-//GET Similar videos 
+//GET Similar  
 
-export const fetchSimilarVideos= async (movieId: string, apiKey?: string) => {
-  const path = `/movie/${movieId}/similar`;
+export const fetchSimilar= async (movieId: string, apiKey?: string) => {
+  const path = `/movie/${movieId}/similar?`;
   const data = await fetchData(path, apiKey);
   console.log(data);
   
   return data?.results || [];
+};
+
+
+// Assume SearchResult interface and fetchData function are defined elsewhere
+export interface SearchResult {
+  id: number;
+  title: string;
+  imageUrl: string; // Add imageUrl property
+  // Add other properties as needed
+}
+
+export const Search = async (searchQuery: string, apiKey?: string): Promise<SearchResult[]> => {
+  try {
+    const path = `/search/movie?query=${searchQuery}&`;
+    const data = await fetchData(path, apiKey);
+    // Ensure data.results is returned correctly
+    const searchResults: SearchResult[] = data.results.map((result: any) => ({
+      id: result.id,
+      title: result.title,
+      imageUrl: result.poster_path
+        ? `https://image.tmdb.org/t/p/w500${result.poster_path}`
+        : 'https://via.placeholder.com/150', // Placeholder image URL if poster_path is null
+      // Add other properties as needed
+    }));
+    return searchResults;
+  } catch (error) {
+    console.error('Error searching:', error);
+    return []; // Return an empty array in case of error
+  }
 };

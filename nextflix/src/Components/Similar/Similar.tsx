@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { fetchSimilarVideos } from '../../Utils/useFetch';
+import { fetchSimilar } from '../../Utils/useFetch';
 import MovieCard from '../MovieCard/MovieCard';
 import styles from '../MovieCard/MovieCard.module.css';
 import useScroll from '../../Utils/useScroll'; 
@@ -15,7 +15,7 @@ const Similar: React.FC<SimilarProps> = ({ movieId }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const movieData = await fetchSimilarVideos(movieId);
+      const movieData = await fetchSimilar(movieId);
       setMovies(movieData);
     };
 
