@@ -118,7 +118,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
               />
             </div>
           )}
-          <div>
+          <div className={styles.movieImages}>
             {movieImages.map((image: any, index: number) => (
               <Image
                 key={index}

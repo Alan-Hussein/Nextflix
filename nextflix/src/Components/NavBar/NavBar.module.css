@@ -1,12 +1,19 @@
 .navbar {
   background-color: rgba(0, 0, 0, 0.4);
-  list-style: none;
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: space-between; /* Ensure space between items */
+  padding: 10px 20px; /* Add some padding */
   position: fixed;
   width: 100%;
   z-index: 100;
+}
+
+.navbarContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .navbarItems {
@@ -14,16 +21,86 @@
   color: white;
   justify-content: center;
   flex-grow: 1;
-
+  gap: 20px;
+  transition: transform 0.3s ease-in-out;
 }
 
-.navbarItems ul {
-    list-style: none;
+.navbarItems li {
+  list-style: none;
+}
+
+.searchWrapper {
+  flex-grow: 1;
+  max-width: 300px;
+  margin-left: 20px;
+}
+
+.menuIcon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+}
+
+.logo {
+  display: block;
+}
+.logoMobile{
+ display: none;   
+}
+
+@media (max-width: 768px) {
+  .navbarContent {
+    flex-direction: column;
     padding: 0;
+  }
+
+  .navbarItems {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-100%);
+    gap: 20px;
+  }
+
+  .navbarItems.open {
+    transform: translateY(0);
+  }
+
+  .navbarItems li {
+    margin: 20px 0;
+  }
+
+  .searchWrapper {
+    width: 80%;
+    max-width: none;
     margin: 0;
+  }
+
+  .menuIcon {
     display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 101; /* Ensure the menu icon is above other elements */
+    position: relative; /* Add position relative */
   }
   
-  .navbarItems li {
-    margin: 0 10px; 
+
+  .logo {
+    display: none;
   }
+  .logoMobile{
+    display: block;
+  }
+}

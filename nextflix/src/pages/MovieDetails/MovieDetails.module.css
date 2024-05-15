@@ -1,5 +1,6 @@
 .movieDetails {
-  margin: 40px 0 5px 90px;
+  margin: 0px 0 5px 90px;
+  padding-top: 150px;
   width: 50%;
 }
 .movieImg {
@@ -28,7 +29,7 @@
   font-style: italic;
 }
 .movieOverview {
-  padding: 30px 0 30px 0;
+  padding: 30px 0;
 }
 
 .genres {
@@ -58,13 +59,62 @@
   background-color: red;
   padding: 10px;
   font-weight: bold;
+  color: white;
+  text-decoration: none;
 }
+
 
 .watch:hover {
   background-color: white;
   color: red;
-  border: white;
+  border-color: red;
 }
 .video {
-  margin: 15px 0 40px 5px;
+  margin-top: 15px;
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: 60%; /* 16:9 aspect ratio */
+}
+
+.videoContainer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.movieImages{
+  margin-top: 50px;
+}
+@media (max-width: 768px) {
+  .movieDetails {
+    width: 90%; /* Adjust width for smaller screens */
+    margin: 0 auto; /* Center align on smaller screens */
+  }
+
+  .overview {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .movieImg {
+    padding: 0  10px 20px; /* Adjust padding */
+  }
+  .video {
+    margin: 200px 0px 150px 0px;
+  }
+  .movieImages{
+    margin:  250px 0 0 30px ;
+    padding: 0;
+    
+  }
 }
