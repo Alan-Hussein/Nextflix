@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import Link from 'next/link'; // Import Link from Next.js
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './SearchInput.module.css';
 import { SearchResult } from '../../Utils/useFetch'; // Adjust the path as needed
 
@@ -10,6 +11,7 @@ interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const router = useRouter();
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -26,6 +28,18 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
       setSearchResults([]); // Clear search results if query is empty
     }
   };
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setSearchQuery(''); // Clear search query when the route changes
+      setSearchResults([]); // Clear search results when the route changes
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <div className={styles.searchContainer}>

@@ -1,5 +1,3 @@
-// MovieDetails.tsx
-
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
@@ -9,8 +7,7 @@ import {
 } from "../../Utils/useFetch";
 import Image from "next/image";
 import styles from "./MovieDetails.module.css";
-import { FaStar } from "react-icons/fa";
-import { log } from "console";
+import { FaStar, FaArrowLeft } from "react-icons/fa";
 import Similar from "../../Components/Similar/Similar";
 import NavBar from "@/Components/NavBar/NavBar";
 
@@ -18,6 +15,7 @@ interface MovieDetailsProps {
   movieId: string;
   apiKey?: string;
 }
+
 const shuffleArray = (array: any[]) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -25,10 +23,12 @@ const shuffleArray = (array: any[]) => {
   }
   return array;
 };
+
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
   const [movieDetails, setMovieDetails] = useState<any>(null);
   const [movieImages, setMovieImages] = useState<any>(null);
   const [video, setVideo] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -49,7 +49,6 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
         setVideo(null);
       }
     };
-    console.log(video);
 
     fetchVideoDetails();
     fetchDetails();
@@ -59,12 +58,17 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
   if (!movieDetails || !movieImages) {
     return <div>Loading...</div>;
   }
- 
+
   return (
     <div className={styles.movieDetailsPage}>
       <NavBar />
+
       <div className={styles.movieDetails}>
-        <h2 className={styles.movieTitle}>{movieDetails.title}</h2>
+        <div className={styles.back}>
+        <FaArrowLeft className={styles.backIcon} onClick={() => router.back()} />
+
+          <h2 className={styles.movieTitle}>{movieDetails.title}</h2>
+        </div>
         <div className={styles.overview}>
           <Image
             className={styles.movieImg}
@@ -93,8 +97,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
 
             <div className={styles.languages}>
               <span>Sopken Languages:</span>{" "}
-              {movieDetails.spoken_languages.map((lan: any) => (
-                <h4>{lan.english_name}/ </h4>
+              {movieDetails.spoken_languages.map((lan: any, index: number) => (
+                <h4 key={index}>{lan.english_name}/ </h4>
               ))}
             </div>
             {movieDetails.homepage && (
@@ -132,7 +136,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
         </div>
       </div>
       <div>
-        <Similar movieId= {movieId}  />
+        <Similar movieId={movieId} />
       </div>
     </div>
   );

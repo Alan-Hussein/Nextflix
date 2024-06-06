@@ -56,6 +56,9 @@
 }
 
 @media (max-width: 768px) {
+  .navbar{
+    padding-top: 40px;
+  }
   .navbarContent {
     flex-direction: column;
     padding: 0;

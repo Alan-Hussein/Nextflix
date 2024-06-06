@@ -4,7 +4,7 @@ import { fetchPopularMovies } from '../../Utils/useFetch';
 import MovieCard from '../MovieCard/MovieCard';
 import styles from '../MovieCard/MovieCard.module.css';
 import useScroll from '../../Utils/useScroll'; 
-
+import  Styles  from './Popular.module.css';
 const Popular: React.FC = () => {
   const [movies, setMovies] = useState<{ title: string; poster_path: string ;id: string }[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,8 +20,8 @@ const Popular: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className={styles['title']}> Popular Movies</h1>
+    <div id='popular'>
+<h1 className={`${styles['title']} ${Styles['titlePopular']}`}>Popular Movies</h1>
       <div className={styles['movie-card-container-wrapper']}>
         <div
           id="movie-card-container"
