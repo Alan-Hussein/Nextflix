@@ -31,13 +31,9 @@ const NavBar: React.FC = () => {
         <Link href="/">
           <li>Home</li>
         </Link>
-        <Link href="/#popular">
-          <li>Movies</li>
-        </Link>
         <Link href="/About">
           <li>About</li>
         </Link>
-        <li>Contact</li>
         <div className={styles.logoMobile}>
           <Logo />
         </div>

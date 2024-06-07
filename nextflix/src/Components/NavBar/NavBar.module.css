@@ -2,8 +2,8 @@
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensure space between items */
-  padding: 10px 20px; /* Add some padding */
+  justify-content: space-between; 
+  padding: 10px 250px 0 50px; 
   position: fixed;
   width: 100%;
   z-index: 100;
@@ -57,7 +57,8 @@
 
 @media (max-width: 768px) {
   .navbar{
-    padding-top: 40px;
+    padding: 40px 20px;
+    gap: 15px;
   }
   .navbarContent {
     flex-direction: column;
@@ -96,7 +97,7 @@
     flex-direction: column;
     cursor: pointer;
     z-index: 101; /* Ensure the menu icon is above other elements */
-    position: relative; /* Add position relative */
+    position: relative; 
   }
   
 

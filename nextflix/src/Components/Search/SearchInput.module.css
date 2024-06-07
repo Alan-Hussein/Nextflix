@@ -16,6 +16,7 @@
   background-color: white;
   border: 1px solid #ccc;
   position: absolute;
+  padding-top: 45px;
   width: 100%;
   max-width: 300px;
   z-index: 100;
@@ -51,4 +52,12 @@
 .noResults {
   padding: 10px;
   color: red;
+}
+
+
+@media (max-width: 768px) {
+.searchResults {
+width: 78%;
+}
+
 }
