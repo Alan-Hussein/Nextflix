@@ -31,7 +31,7 @@ export const fetchData = async (path: string, apiKey?: string) => {
   }
 };
 
-// Get Movies' Images
+// Get Movies's Images
 export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
   const path = `/movie/${movieId}/images?`;
   const url = getApiUrl(path, apiKey);
@@ -54,6 +54,7 @@ export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
   }
 };
 
+// Get Tv's Images
 
 export const fetchTvImages = async (movieId: string, apiKey?: string) => {
   const path = `/tv/${movieId}/images?`;
@@ -88,6 +89,7 @@ export const fetchMovieDetails = async (movieId: string, apiKey?: string) => {
   const path = `/movie/${movieId}?`;
   return await fetchData(path, apiKey);
 };
+// Fetch Tv Details
 
 export const fetchTvDetails = async (movieId: string, apiKey?: string) => {
   const path = `/tv/${movieId}?`;
@@ -109,6 +111,13 @@ export const fetchPopularMovies = async (apiKey?: string) => {
 //GET video
 export const fetchVideo = async (movieId: string,apiKey?: string) =>{
   const path = `/movie/${movieId}/videos?`;
+  const data = await fetchData(path, apiKey);
+  return data?.results || [];
+
+}
+//GET TV video
+export const fetchTvVideo = async (movieId: string,apiKey?: string) =>{
+  const path = `/tv/${movieId}/videos?`;
   const data = await fetchData(path, apiKey);
   return data?.results || [];
 
