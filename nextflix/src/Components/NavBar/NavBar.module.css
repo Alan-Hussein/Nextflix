@@ -18,7 +18,8 @@
 
 .navbarItems {
   display: flex;
-  color: white;
+  color: purple;
+  font-weight: bold ;
   justify-content: center;
   flex-grow: 1;
   gap: 20px;
