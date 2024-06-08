@@ -5,6 +5,7 @@ import {
   fetchTvDetails,
   fetchMovieImages,
   fetchVideo,
+  fetchTvImages
 } from "../../Utils/useFetch";
 import Image from "next/image";
 import styles from "./MovieDetails.module.css";
@@ -41,7 +42,9 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, mediaType, apiKey 
     };
 
     const fetchImages = async () => {
-      const images = await fetchMovieImages(movieId, apiKey);
+      const images = mediaType === 'movie'
+       ? await fetchMovieImages(movieId, apiKey)
+        :await fetchTvImages(movieId, apiKey);
       setImages(images ? shuffleArray(images).slice(0, 6) : null);
     };
 

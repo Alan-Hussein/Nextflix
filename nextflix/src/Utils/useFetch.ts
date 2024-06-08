@@ -54,6 +54,28 @@ export const fetchMovieImages = async (movieId: string, apiKey?: string) => {
   }
 };
 
+
+export const fetchTvImages = async (movieId: string, apiKey?: string) => {
+  const path = `/tv/${movieId}/images?`;
+  const url = getApiUrl(path, apiKey);
+
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      return data.backdrops.map((image: any) => ({
+        src: `https://image.tmdb.org/t/p/original${image.file_path}?`,
+        alt: `Backdrop Image for Movie ${movieId}`,
+      }));
+    } else {
+      console.error('Failed to fetch movie images');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+};
 // Fetch Top Rated Movies
 export const fetchTopRatedMovies = async (apiKey?: string) => {
   const path = '/movie/top_rated?';
