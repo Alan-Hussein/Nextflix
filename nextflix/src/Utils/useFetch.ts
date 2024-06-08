@@ -67,6 +67,11 @@ export const fetchMovieDetails = async (movieId: string, apiKey?: string) => {
   return await fetchData(path, apiKey);
 };
 
+export const fetchTvDetails = async (movieId: string, apiKey?: string) => {
+  const path = `/tv/${movieId}?`;
+  return await fetchData(path, apiKey);
+};
+
 // Get Popular Movies
 export const fetchPopularMovies = async (apiKey?: string) => {
   const path = '/movie/popular?';
@@ -102,21 +107,20 @@ export interface SearchResult {
   id: number;
   title: string;
   imageUrl: string; // Add imageUrl property
-  // Add other properties as needed
+  mediaType: 'movie' | 'tv';
 }
 
 export const Search = async (searchQuery: string, apiKey?: string): Promise<SearchResult[]> => {
   try {
-    const path = `/search/movie?query=${searchQuery}&`;
+    const path = `/search/multi?query=${searchQuery}&`;
     const data = await fetchData(path, apiKey);
-    // Ensure data.results is returned correctly
     const searchResults: SearchResult[] = data.results.map((result: any) => ({
       id: result.id,
-      title: result.title,
+      title: result.name || result.title,
       imageUrl: result.poster_path
         ? `https://image.tmdb.org/t/p/w500${result.poster_path}`
         : 'https://via.placeholder.com/150', // Placeholder image URL if poster_path is null
-      // Add other properties as needed
+      mediaType: result.media_type, // Corrected spelling to mediaType
     }));
     return searchResults;
   } catch (error) {
@@ -124,3 +128,4 @@ export const Search = async (searchQuery: string, apiKey?: string): Promise<Sear
     return []; // Return an empty array in case of error
   }
 };
+

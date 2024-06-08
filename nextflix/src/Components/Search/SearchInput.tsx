@@ -41,22 +41,24 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
     };
   }, [router.events]);
 
+  const filteredResults = searchResults.filter(result => result.mediaType === 'movie' || result.mediaType === 'tv');
+
   return (
     <div className={styles.searchContainer}>
       <input
         type="text"
-        placeholder="Search movies..."
+        placeholder="Search movies and TV shows..."
         value={searchQuery}
         onChange={handleChange}
         className={styles.searchInput}
       />
-      {searchResults.length > 0 && (
+      {filteredResults.length > 0 && (
         <div className={styles.searchResults}>
           <div className={styles.resultsContainer}>
             <ul className={styles.resultsList}>
-              {searchResults.map(result => (
+              {filteredResults.map(result => (
                 <li key={result.id} className={styles.result}>
-                  <Link href={`/movie/${result.id}`}>
+                  <Link href={`/${result.mediaType}/${result.id}`}>
                     <div>
                       <img src={result.imageUrl} alt={result.title} className={styles.resultImage} />
                       <span className={styles.resultTitle}>{result.title}</span>
@@ -68,7 +70,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
           </div>
         </div>
       )}
-      {searchResults.length === 0 && searchQuery.trim() !== '' && (
+      {filteredResults.length === 0 && searchQuery.trim() !== '' && (
         <div className={styles.noResults}>No results found</div>
       )}
     </div>

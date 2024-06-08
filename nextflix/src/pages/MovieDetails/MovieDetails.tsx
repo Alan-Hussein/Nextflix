@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   fetchMovieDetails,
+  fetchTvDetails,
   fetchMovieImages,
   fetchVideo,
 } from "../../Utils/useFetch";
@@ -13,6 +14,7 @@ import NavBar from "@/Components/NavBar/NavBar";
 
 interface MovieDetailsProps {
   movieId: string;
+  mediaType: 'movie' | 'tv';
   apiKey?: string;
 }
 
@@ -24,21 +26,23 @@ const shuffleArray = (array: any[]) => {
   return array;
 };
 
-const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
-  const [movieDetails, setMovieDetails] = useState<any>(null);
-  const [movieImages, setMovieImages] = useState<any>(null);
+const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, mediaType, apiKey }) => {
+  const [details, setDetails] = useState<any>(null);
+  const [images, setImages] = useState<any>(null);
   const [video, setVideo] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const details = await fetchMovieDetails(movieId, apiKey);
-      setMovieDetails(details);
+      const details = mediaType === 'tv' 
+        ? await fetchTvDetails(movieId, apiKey) 
+        : await fetchMovieDetails(movieId, apiKey);
+      setDetails(details);
     };
 
     const fetchImages = async () => {
       const images = await fetchMovieImages(movieId, apiKey);
-      setMovieImages(images ? shuffleArray(images).slice(0, 6) : null);
+      setImages(images ? shuffleArray(images).slice(0, 6) : null);
     };
 
     const fetchVideoDetails = async () => {
@@ -53,56 +57,52 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
     fetchVideoDetails();
     fetchDetails();
     fetchImages();
-  }, [movieId, apiKey]);
+  }, [movieId, mediaType, apiKey]);
 
-  if (!movieDetails || !movieImages) {
+  if (!details || !images) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className={styles.movieDetailsPage}>
       <NavBar />
-
       <div className={styles.movieDetails}>
         <div className={styles.back}>
-        <FaArrowLeft className={styles.backIcon} onClick={() => router.back()} />
-
-          <h2 className={styles.movieTitle}>{movieDetails.title}</h2>
+          <FaArrowLeft className={styles.backIcon} onClick={() => router.back()} />
+          <h2 className={styles.movieTitle}>{details.title || details.name}</h2>
         </div>
         <div className={styles.overview}>
           <Image
             className={styles.movieImg}
-            src={`https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`}
-            alt={`${movieDetails.title} Poster`}
+            src={`https://image.tmdb.org/t/p/w500/${details.poster_path}`}
+            alt={`${details.title || details.name} Poster`}
             width={500}
             height={500}
           />
           <div className={styles.movieDetailsOverview}>
             <p className={styles.originalTitle}>
-              {movieDetails.original_title}
+              {details.original_title || details.original_name}
             </p>
-            <p className={styles.movieOverview}>{movieDetails.overview}</p>
-
-            {movieDetails.genres.map((genre: any) => (
+            <p className={styles.movieOverview}>{details.overview}</p>
+            {details.genres.map((genre: any) => (
               <p className={styles.genres} key={genre.id}>
                 {genre.name} |
               </p>
             ))}
             <div className={styles.voteStar}>
               <p className={styles.vote}>
-                {movieDetails.vote_average.toFixed(1)}
+                {details.vote_average.toFixed(1)}
               </p>
               <FaStar className={styles.star} />
             </div>
-
             <div className={styles.languages}>
-              <span>Sopken Languages:</span>{" "}
-              {movieDetails.spoken_languages.map((lan: any, index: number) => (
+              <span>Spoken Languages:</span>{" "}
+              {details.spoken_languages.map((lan: any, index: number) => (
                 <h4 key={index}>{lan.english_name}/ </h4>
               ))}
             </div>
-            {movieDetails.homepage && (
-              <a className={styles.watch} href={movieDetails.homepage}>
+            {details.homepage && (
+              <a className={styles.watch} href={details.homepage}>
                 {" "}
                 Link To Watch
               </a>
@@ -123,7 +123,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, apiKey }) => {
             </div>
           )}
           <div className={styles.movieImages}>
-            {movieImages.map((image: any, index: number) => (
+            {images.map((image: any, index: number) => (
               <Image
                 key={index}
                 src={image.src}

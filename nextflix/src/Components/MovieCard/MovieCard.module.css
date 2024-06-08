@@ -1,14 +1,16 @@
 .title {
   color: purple;
   padding: 25px;
+  font-family: cursive;
 }
 .movieCard {
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
   margin: 10px;
   padding: 10px;
   width: 320px;
   text-align: center;
   transition: transform 0.3s ease;
+  
 }
 .movieCard:hover {
   transform: scale(1.05);
