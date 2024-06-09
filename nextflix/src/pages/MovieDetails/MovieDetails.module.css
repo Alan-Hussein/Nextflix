@@ -32,19 +32,20 @@
 .originalTitle {
   font-size: 20px;
   font-weight: bold;
-  color: purple;
+  color: red;
   font-style: italic;
 }
 
 .movieOverview {
   margin-top: 10px;
   padding: 10px 0;
+  font-size: 20px;
 }
 
 .genres {
   display: inline;
   padding-right: 10px;
-  color: purple;
+  color: red;
 }
 
 .voteStar {
@@ -139,6 +140,7 @@
 
   .movieOverview {
     margin: 0;
+    font-size: 16px;
   }
 
   .movieImg {

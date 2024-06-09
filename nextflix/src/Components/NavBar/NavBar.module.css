@@ -49,7 +49,8 @@
   margin: 4px 0;
 }
 .navbarItems li.active {
-  color: gold; /* Gold color for the active item */
+  color: red; 
+  
 }
 
 .logo {
