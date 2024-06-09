@@ -1,16 +1,28 @@
-.aboutPage{
-    padding: 150px 0 0 20px;
-    font-size: 26px;
-    font-family: cursive;
-
+.aboutPage {
+  padding: 150px 0 0 20px;
+  margin-bottom:75px ;
+  font-size: 26px;
+  font-family: cursive;
 }
 
-.title{         
-    color: purple;
-    margin-bottom: 20px;
+.title {
+  color: red;
+  margin-bottom: 20px;
 }
 
-.Nextflix{
-    color: purple;
-    font-weight: bold;
+.Nextflix {
+  color: red;
+  font-weight: bold;
 }
+.red{
+    color: red;
+    padding-top: 50px;
+}
+
+.bold {
+  color: brown;
+}
+.point {
+  padding-top: 40px;
+}
+
