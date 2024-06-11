@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 interface UseScrollProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -28,48 +28,11 @@ const useScroll = ({ containerRef }: UseScrollProps) => {
     touchStartX.current = null;
   };
 
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-
-      const container = containerRef.current;
-      const cardWidth = 340;
-
-      if (container) {
-        if (e.deltaY > 0) {
-          container.scrollLeft += cardWidth; // Scroll right
-        } else {
-          container.scrollLeft -= cardWidth; // Scroll left
-        }
-      }
-    };
+  const handleWheel = useCallback((e: WheelEvent | React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
 
     const container = containerRef.current;
-
-    if (container) {
-      container.addEventListener('wheel', handleWheel);
-
-      return () => {
-        container.removeEventListener('wheel', handleWheel);
-      };
-    }
-  }, [containerRef]);
-
-  const handleButtonClick = (direction: 'left' | 'right') => {
-    const container = containerRef.current;
-    const cardWidth = 340; // Adjust the card width based on styles
-    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-
-    if (container) {
-      container.scrollLeft += scrollAmount;
-    }
-  };
-
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault(); // Prevent the default behavior
-
-    const container = containerRef.current;
-    const cardWidth = 340; // Adjust the card width based on styles
+    const cardWidth = 340;
 
     if (container) {
       if (e.deltaY > 0) {
@@ -78,11 +41,29 @@ const useScroll = ({ containerRef }: UseScrollProps) => {
         container.scrollLeft -= cardWidth; // Scroll left
       }
     }
+  }, [containerRef]);
 
-    // Stop the propagation of the wheel event to prevent it from affecting parent elements
-    // e.stopPropagation();
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (container) {
+      container.addEventListener('wheel', handleWheel as EventListener);
+
+      return () => {
+        container.removeEventListener('wheel', handleWheel as EventListener);
+      };
+    }
+  }, [containerRef, handleWheel]);
+
+  const handleButtonClick = (direction: 'left' | 'right') => {
+    const container = containerRef.current;
+    const cardWidth = 340;
+    const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
+
+    if (container) {
+      container.scrollLeft += scrollAmount;
+    }
   };
-
 
   return {
     handleTouchStart,
